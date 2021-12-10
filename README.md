@@ -1,6 +1,6 @@
 # Installatie instructies
 
-# GitHub URL: https://github.com/TwisterTies/EindcaseHerkansing-BDM-
+# GitHub URL: https://github.com/TwisterTies/HerkansingEindcase-BDM-
 
 1. Zorg ervoor dat EF6, NET 6, VS2022 en latest versie van Angular CLI geïnstalleerd staat
 
