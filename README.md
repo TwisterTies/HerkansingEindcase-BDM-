@@ -6,7 +6,7 @@
 
 2. Zorg ervoor dat er een LocalDB SQLServer draait.
 
-3. Run daarna Update-Database in de terminal van de solution. Dan wordt alles richting de SQL-server gepusht.
+3. Run daarna Update-Database in de terminal van de back-end solution. Dan wordt alles richting de SQL-server gepusht.
 
 7. Run de back-end solution, kijk in de console / web-browser welk localhost-adres deze heeft gekregen.
 
