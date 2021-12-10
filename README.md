@@ -4,15 +4,9 @@
 
 1. Zorg ervoor dat EF6, NET 6, VS2022 en latest versie van Angular CLI geïnstalleerd staat
 
-2. Zorg ervoor dat er een LocalDB SQLServer draait met daarin een Database met de naam 'CaseContext'.
+2. Zorg ervoor dat er een LocalDB SQLServer draait.
 
-3. In de appsettings.json van de back-end, staat er een connection string naar de LocalDB.
-
-4. In startup.cs van de back-end, staat er 'options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))'. Vervang deze string met 'LocalDbConnection'.
-
-5. Zorg er eerst voor dat Add-Migration in de terminal geruned wordt met een naam, kan bijvoorbeeld 'TestCreate' oid zijn.
-
-6. Run daarna Update-Database in de terminal. Dan wordt alles richting de SQL-server gepusht.
+3. Run daarna Update-Database in de terminal van de solution. Dan wordt alles richting de SQL-server gepusht.
 
 7. Run de back-end solution, kijk in de console / web-browser welk localhost-adres deze heeft gekregen.
 
