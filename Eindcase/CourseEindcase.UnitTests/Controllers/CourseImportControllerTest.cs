@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using CourseEindcase.Controllers;
 using CourseEindcase.DTO;
 using CourseEindcase.Interfaces;
-using CourseEindcase.Model;
 using Microsoft.AspNetCore.Http;
 using Xunit;
 using Moq;
@@ -48,6 +45,7 @@ Startdatum: 22/03/2021";
             ContentType = "text/plain",
             ContentDisposition = "form-data; name=\"file\"; filename=\"dummy.txt\"",
         };
+        
         ImportReply expectedReply = new ImportReply()
         {
             CoursesAdded = 2,

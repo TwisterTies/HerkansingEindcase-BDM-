@@ -14,6 +14,7 @@
             <button type="button" class="btn btn-outline-primary" (click)="uploadFile(file.files)">Upload een bestand</button>
             <p class="text-success" *ngIf="showMessage">Er zijn in totaal: {{fileUploadMessage.coursesAdded}} cursussen toegevoegd en {{fileUploadMessage.editionsAdded}} edities toegevoegd</p>
             <p class="text-danger" *ngIf="showMessage">Er zijn in totaal: {{fileUploadMessage.duplicateCourses}} duplicaten in cursussen gevonden en {{fileUploadMessage.duplicateEditions}} duplicaten in instanties gevonden</p>
+            <p class="text-danger" *ngIf="showMessage">{{fileUploadMessage.errorMessage}}</p>
           </ul>
         </div>
       </div>

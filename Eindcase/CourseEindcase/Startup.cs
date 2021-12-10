@@ -28,7 +28,7 @@ namespace CourseEindcase
             // Wanneer dit getest moet worden op een andere database, vervang dan 'DefaultConnection' door 'LocalDbConnection'
             // Zorg er ook voor dat er een Database aanwezig is met de naam 'CaseContext', anders werkt het niet ;)
             services.AddDbContext<CaseContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("LocalDbConnection")));
             
             services.AddTransient<ICourseParser>(sp => new CourseParser(new CourseTitleParser(), new CourseCodeParser(), new CourseDurationParser(), new CourseStartdateParser(), new EmptyParser()));
             

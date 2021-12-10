@@ -1,5 +1,4 @@
 using CourseEindcase.DTO;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CourseEindcase.Interfaces;
 

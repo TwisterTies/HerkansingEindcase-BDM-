@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using CourseEindcase.DTO;
 using CourseEindcase.Interfaces;
 using CourseEindcase.Model;
@@ -21,38 +22,55 @@ public class CourseImportService : ICoursesImportService
     {
         using StreamReader reader = new StreamReader(file.OpenReadStream());
         var fileContent = await reader.ReadToEndAsync();
-        List<Course> courses = _courseParser.Parse(fileContent);
-        var coursesAdded = 0;
-        var editionsAdded = 0;
-        var duplicateEditions = 0;
-        var duplicateCourses = 0;
-        foreach (var courseToAdd in courses) 
+        try
         {
-            Course existing = await _courseImportRepository.GetCourseWithCourseEditions(courseToAdd);
-            if (existing is null) 
+            List<Course> courses = _courseParser.Parse(fileContent);
+            var coursesAdded = 0;
+            var editionsAdded = 0;
+            var duplicateEditions = 0;
+            var duplicateCourses = 0;
+            foreach (var courseToAdd in courses)
             {
-                await _courseImportRepository.AddCourse(courseToAdd);
-                coursesAdded++;
-                editionsAdded += courseToAdd.Editions.Count();
-            } 
-            else
-            {
-                duplicateCourses++;
-                foreach (CourseEdition courseToAdd_Edition in courseToAdd.Editions) 
+                Course existing = await _courseImportRepository.GetCourseWithCourseEditions(courseToAdd);
+                if (existing is null)
                 {
-                    if (existing.Editions.FirstOrDefault(e => e.StartDatum == courseToAdd_Edition.StartDatum) is null) 
+                    await _courseImportRepository.AddCourse(courseToAdd);
+                    coursesAdded++;
+                    editionsAdded += courseToAdd.Editions.Count();
+                }
+                else
+                {
+                    duplicateCourses++;
+                    foreach (CourseEdition courseToAdd_Edition in courseToAdd.Editions)
                     {
-                        existing.Editions.Add(courseToAdd_Edition);
-                        editionsAdded++;
-                    }
-                    else
-                    {
-                        duplicateEditions++;
+                        if (existing.Editions.FirstOrDefault(e => e.StartDatum == courseToAdd_Edition.StartDatum) is
+                            null)
+                        {
+                            existing.Editions.Add(courseToAdd_Edition);
+                            editionsAdded++;
+                        }
+                        else
+                        {
+                            duplicateEditions++;
+                        }
                     }
                 }
             }
+
+            await _courseImportRepository.SaveChanges();
+            return new ImportReply()
+            {
+                CoursesAdded = coursesAdded, EditionsAdded = editionsAdded, DuplicateCourses = duplicateCourses,
+                DuplicateEditions = duplicateEditions
+            };
         }
-        await _courseImportRepository.SaveChanges();
-        return new ImportReply() { CoursesAdded = coursesAdded, EditionsAdded = editionsAdded, DuplicateCourses = duplicateCourses, DuplicateEditions = duplicateEditions };
+        catch (ValidationException e)
+        {
+            string errorMessage = $"{e.Message}";
+            return new ImportReply()
+            {
+                ErrorMessage = errorMessage
+            };
+        }
     }
 }

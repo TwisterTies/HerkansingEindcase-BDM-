@@ -3,4 +3,5 @@ export class FileUploadMessage {
     editionsAdded: number = 0;
     duplicateEditions: number = 0;
     duplicateCourses: number = 0;
+    errorMessage: string = '';
  }

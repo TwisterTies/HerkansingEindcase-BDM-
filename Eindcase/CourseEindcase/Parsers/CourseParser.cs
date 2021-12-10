@@ -28,7 +28,7 @@ public class CourseParser : ICourseParser
 
         try
         {
-            while (fileLines < lines.Length - 1)
+            while (fileLines < lines.Length - 2)
             {
                 string titleString = lines[fileLines];
                 string title = _titleParser.Parse(titleString);
@@ -44,7 +44,11 @@ public class CourseParser : ICourseParser
 
                 string startDateString = lines[fileLines];
                 DateTime startDate = _startDateParser.Parse(startDateString);
-                fileLines += 2;
+                fileLines++;
+                
+                string line = lines[fileLines];
+                string emptyLine = _emptyParser.Parse(line);
+                fileLines++;
 
                 Course course = new Course()
                     { Title = title, Duration = duration, CourseCode = courseCode, Editions = new List<CourseEdition>() };
@@ -66,7 +70,7 @@ public class CourseParser : ICourseParser
         }
         catch (ValidationException e)
         {
-            Console.WriteLine(e.Message);
+            throw new ValidationException($"De volgende fout is opgetreden: {e.Message} op regel {fileLines + 1}");
         }
         return courses;
     }
